@@ -12,7 +12,7 @@ import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
-public class ListAllEmployeesUseCase implements ListAllHotelInputPort {
+public class ListAllHotelUseCase implements ListAllHotelInputPort {
 
     private final HotelFactory factory;
     private final FindingAllHotelsOutputPort  findingAllHotelsOutputPort;

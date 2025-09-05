@@ -1,4 +1,4 @@
-package com.eatsleep.hotel.room.infrastructure.persistence.entity;
+package com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.entity;
 
 import com.eatsleep.hotel.hotel.infrastructure.outputadapter.persistence.entity.HotelDBEntity;
 import jakarta.persistence.*;

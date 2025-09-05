@@ -1,6 +1,6 @@
 package com.eatsleep.hotel.hotel.infrastructure.outputadapter.persistence.entity;
 
-import com.eatsleep.hotel.room.infrastructure.persistence.entity.RoomDBEntity;
+import com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.entity.RoomDBEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

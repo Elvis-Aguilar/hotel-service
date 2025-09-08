@@ -1,7 +1,7 @@
-package com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.entity;
+package com.eatsleep.hotel.reservation.infrastructure.outputadapter.persistence.entity;
 
 import com.eatsleep.hotel.hotel.infrastructure.outputadapter.persistence.entity.HotelDBEntity;
-import com.eatsleep.hotel.reservation.infrastructure.outputadapter.persistence.entity.ReservationDBEntity;
+import com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.entity.RoomDBEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,20 +9,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Entity(name = "room")
-@Table(name = "room", schema = "hotel")
+@Entity(name = "reservation")
+@Table(name = "reservation", schema = "reservation")
 @Data
 @Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class RoomDBEntity {
+public class ReservationDBEntity {
 
     @Id
     @GeneratedValue
@@ -31,7 +32,19 @@ public class RoomDBEntity {
 
     @NonNull
     @Column(nullable = false)
-    private String roomNumber;
+    private UUID customerId;
+
+    @NonNull
+    @Column(nullable = false)
+    private LocalDate startDate;
+
+    @NonNull
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    @NonNull
+    @Column(nullable = false)
+    private String state;
 
     @NonNull
     @Column(nullable = false)
@@ -39,26 +52,22 @@ public class RoomDBEntity {
 
     @NonNull
     @Column(nullable = false)
-    private BigDecimal costMaintenancePerDay;
+    private BigDecimal totalPrice;
 
     @NonNull
     @Column(nullable = false)
-    private String description;
+    private BigDecimal maintenanceCostPerDay;
 
     @NonNull
     @Column(nullable = false)
-    private Integer capacity;
+    private BigDecimal totalCost;
 
     @NonNull
-    @Column(nullable = false)
-    private String state;
+    @Column(nullable = true)
+    private BigDecimal discountPercentage;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "hotel_id")
-    private HotelDBEntity hotel;
-
-    @OneToMany(mappedBy = "room")
-    private Set<ReservationDBEntity> reservations;
+    @Column(nullable = true)
+    private UUID promotionId;
 
     @CreationTimestamp
     private Instant createdAt;
@@ -66,5 +75,8 @@ public class RoomDBEntity {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "room_id")
+    private RoomDBEntity room;
 
 }

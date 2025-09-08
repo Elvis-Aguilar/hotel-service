@@ -44,3 +44,7 @@ CREATE TABLE reservation.reservation (
     updated_at TIMESTAMP,
     CONSTRAINT fk_room_reservation FOREIGN KEY (room_id) REFERENCES hotel.room(id)
 );
+
+ALTER TABLE reservation.reservation
+    ADD COLUMN total_cost DECIMAL(10,2) NOT NULL DEFAULT 0;
+

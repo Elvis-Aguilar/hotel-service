@@ -15,8 +15,9 @@ public class RoomDomainEntity {
     private String description;
     private Integer capacity;
     private String state;
+    private String hotelName;
 
-    public RoomDomainEntity(String state, Integer capacity, String description, BigDecimal costMaintenancePerDay, BigDecimal pricePerDay, String roomNumber, UUID id) {
+    public RoomDomainEntity(String state, Integer capacity, String description, BigDecimal costMaintenancePerDay, BigDecimal pricePerDay, String roomNumber, UUID id, String hotelName) {
         this.state = state;
         this.capacity = capacity;
         this.description = description;
@@ -24,14 +25,16 @@ public class RoomDomainEntity {
         this.pricePerDay = pricePerDay;
         this.roomNumber = roomNumber;
         this.id = id;
+        this.hotelName = hotelName;
     }
 
-    public RoomDomainEntity(String state, Integer capacity, String description, BigDecimal costMaintenancePerDay, BigDecimal pricePerDay, String roomNumber) {
+    public RoomDomainEntity(String state, Integer capacity, String description, BigDecimal costMaintenancePerDay, BigDecimal pricePerDay, String roomNumber, String hotelName) {
         this.state = state;
         this.capacity = capacity;
         this.description = description;
         this.costMaintenancePerDay = costMaintenancePerDay;
         this.pricePerDay = pricePerDay;
         this.roomNumber = roomNumber;
+        this.hotelName = hotelName;
     }
 }

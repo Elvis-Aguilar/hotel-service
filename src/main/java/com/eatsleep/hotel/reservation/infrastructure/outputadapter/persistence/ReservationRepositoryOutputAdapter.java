@@ -19,7 +19,8 @@ import java.util.UUID;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class ReservationRepositoryOutputAdapter implements StoringReservationOutputPort, FindingReservationRangeDateByRoomIdOutputPort,
-        FindingReservationByIdOutputPort, FindingAllCurrentReservationByRoomIdOutputPort, FindingAllReservationByRoomIdOutputPort {
+        FindingReservationByIdOutputPort, FindingAllCurrentReservationByRoomIdOutputPort, FindingAllReservationByRoomIdOutputPort,
+        FindingReservationByCustomerIdOutputPort{
 
     private final ReservationDBRepository reservationDBRepository;
     private final RoomDBRepository roomDBRepository;
@@ -61,6 +62,14 @@ public class ReservationRepositoryOutputAdapter implements StoringReservationOut
     @Override
     public List<ReservationDomainEntity> findAllCurrentByRoomId(UUID roomId) {
         return reservationDBRepository.findAllByRoomIdAndStartDateGreaterThanEqual(roomId, LocalDate.now())
+                .stream()
+                .map(mapper::toDomainEntity)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDomainEntity> findAllByCustomerId(UUID customerId) {
+        return reservationDBRepository.findAllByCustomerId(customerId)
                 .stream()
                 .map(mapper::toDomainEntity)
                 .toList();

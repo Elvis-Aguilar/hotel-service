@@ -11,9 +11,9 @@ import java.util.UUID;
 @FeignClient(name = "promotion", url = "${client.services.promotion}/api/promotion")
 public interface PromotionRestClient {
 
-    @GetMapping("/v1/promotions/room/{roomId}")
+    @GetMapping("/v1/promotions/rooms/{roomId}")
     List<PromotionResponseDto> getAllPromotionFindByRoomId(@PathVariable UUID roomId);
 
-    @GetMapping("/v1/promotions/customer/{customerId}")
+    @GetMapping("/v1/promotions/customers/{customerId}")
     List<PromotionResponseDto> getAllPromotionFindByCustomerId(@PathVariable UUID customerId);
 }

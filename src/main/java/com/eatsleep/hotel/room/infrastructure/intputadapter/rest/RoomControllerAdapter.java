@@ -3,6 +3,7 @@ package com.eatsleep.hotel.room.infrastructure.intputadapter.rest;
 import com.eatsleep.hotel.common.infrastructure.annotation.WebAdapter;
 import com.eatsleep.hotel.room.application.ports.input.FindingRoomByIdInputPort;
 import com.eatsleep.hotel.room.application.ports.input.ListAllRoomsByHotelIdInputPort;
+import com.eatsleep.hotel.room.application.ports.input.ListAllRoomsInputPort;
 import com.eatsleep.hotel.room.infrastructure.intputadapter.dto.RoomResponseDto;
 import com.eatsleep.hotel.room.infrastructure.intputadapter.mapper.RoomRestMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class RoomControllerAdapter {
 
     private final ListAllRoomsByHotelIdInputPort listAllRoomsByHotelIdInputPort;
     private final FindingRoomByIdInputPort  findingRoomByIdInputPort;
+    private final ListAllRoomsInputPort listAllRoomsInputPort;
     private final RoomRestMapper mapper;
 
 
@@ -39,6 +41,16 @@ public class RoomControllerAdapter {
     public ResponseEntity<RoomResponseDto> findRoomById(@PathVariable UUID roomId) {
         RoomResponseDto dto = mapper.toResponseDto(findingRoomByIdInputPort.findById(roomId));
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<RoomResponseDto>> findAllRooms(){
+        List<RoomResponseDto> dtos = listAllRoomsInputPort.listAllRooms()
+                .stream()
+                .map(mapper::toResponseDto)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
     }
 
 }

@@ -16,6 +16,7 @@ public class RoomPersistenceMapper {
                 roomDBEntity.getCostMaintenancePerDay(),
                 roomDBEntity.getPricePerDay(),
                 roomDBEntity.getRoomNumber(),
-                roomDBEntity.getId());
+                roomDBEntity.getId(),
+                roomDBEntity.getHotel().getName());
     }
 }

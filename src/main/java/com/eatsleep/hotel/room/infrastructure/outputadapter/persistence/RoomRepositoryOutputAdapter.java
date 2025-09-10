@@ -5,6 +5,7 @@ import com.eatsleep.hotel.common.infrastructure.exception.BadRequestException;
 import com.eatsleep.hotel.room.application.ports.output.CountingRoomByHotelOutputPort;
 import com.eatsleep.hotel.room.application.ports.output.FindingAllRoomsByHotelIdOutputPort;
 import com.eatsleep.hotel.room.application.ports.output.FindingRoomByHotelIdOutputPort;
+import com.eatsleep.hotel.room.application.ports.output.FindingRoomsOutputPort;
 import com.eatsleep.hotel.room.domain.RoomDomainEntity;
 import com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.entity.RoomDBEntity;
 import com.eatsleep.hotel.room.infrastructure.outputadapter.persistence.mapper.RoomPersistenceMapper;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class RoomRepositoryOutputAdapter implements CountingRoomByHotelOutputPort, FindingRoomByHotelIdOutputPort,
-        FindingAllRoomsByHotelIdOutputPort {
+        FindingAllRoomsByHotelIdOutputPort, FindingRoomsOutputPort {
 
     private final RoomDBRepository roomDBRepository;
     private final RoomPersistenceMapper mapper;
@@ -39,5 +40,13 @@ public class RoomRepositoryOutputAdapter implements CountingRoomByHotelOutputPor
                 .orElseThrow(() -> new BadRequestException("Room no encontrado"));
 
         return mapper.toDomain(entity);
+    }
+
+    @Override
+    public List<RoomDomainEntity> findAllRooms() {
+        return roomDBRepository.findAll()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 }

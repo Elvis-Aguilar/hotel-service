@@ -18,6 +18,7 @@ public class RoomRestMapper {
                 .costMaintenancePerDay(entity.getCostMaintenancePerDay())
                 .pricePerDay(entity.getPricePerDay())
                 .roomNumber(entity.getRoomNumber())
+                .hotelName(entity.getHotelName())
                 .build();
 
     }

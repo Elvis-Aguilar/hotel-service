@@ -28,7 +28,8 @@ public class ReservationClientOutputAdapter implements FindingPromotionByRoomIdO
                     .map(mapper::toDomainEntity)
                     .toList();
         }catch (FeignException e) {
-            throw new ExternalServiceException("No se pudo obtener la lista de promociones.");
+            e.getStackTrace();
+            throw new ExternalServiceException("No se pudo obtener la lista de promociones de habitaciones.");
         }
     }
 
@@ -40,7 +41,7 @@ public class ReservationClientOutputAdapter implements FindingPromotionByRoomIdO
                     .map(mapper::toDomainEntity)
                     .toList();
         }catch (FeignException e) {
-            throw new ExternalServiceException("No se pudo obtener la lista de promociones.");
+            throw new ExternalServiceException("No se pudo obtener la lista de promociones de clientes.");
         }
     }
 }

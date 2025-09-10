@@ -28,6 +28,8 @@ public interface ReservationDBRepository extends JpaRepository<ReservationDBEnti
 
     List<ReservationDBEntity> findAllByRoomId(UUID roomId);
 
+    List<ReservationDBEntity> findAllByCustomerId(UUID customerId);
+
     List<ReservationDBEntity> findAllByRoomIdAndStartDateGreaterThanEqual(UUID roomId, LocalDate startDate);
 }
 

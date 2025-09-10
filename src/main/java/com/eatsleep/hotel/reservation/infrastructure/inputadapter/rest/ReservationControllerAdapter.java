@@ -1,10 +1,7 @@
 package com.eatsleep.hotel.reservation.infrastructure.inputadapter.rest;
 
 import com.eatsleep.hotel.common.infrastructure.annotation.WebAdapter;
-import com.eatsleep.hotel.reservation.application.ports.input.CreatingReservationInputPort;
-import com.eatsleep.hotel.reservation.application.ports.input.FindingReservationByIdInputPort;
-import com.eatsleep.hotel.reservation.application.ports.input.ListAllReservationByRoomIdInputPort;
-import com.eatsleep.hotel.reservation.application.ports.input.ListAllReservationCurrentByRoomIdInputPort;
+import com.eatsleep.hotel.reservation.application.ports.input.*;
 import com.eatsleep.hotel.reservation.application.usecases.CreateReservationDto;
 import com.eatsleep.hotel.reservation.domain.model.ReservationDomainEntity;
 import com.eatsleep.hotel.reservation.infrastructure.inputadapter.dto.CreateReservationRequestDto;
@@ -30,6 +27,7 @@ public class ReservationControllerAdapter {
     private final FindingReservationByIdInputPort findingReservationByIdInputPort;
     private final ListAllReservationByRoomIdInputPort listAllReservationByRoomIdInputPort;
     private final ListAllReservationCurrentByRoomIdInputPort listAllReservationCurrentByRoomIdInputPort;
+    private final ListAllReservationByCustomerIdInputPort listAllReservationByCustomerIdInputPort;
 
     @PostMapping
     public ResponseEntity<Void> createReservation(@RequestBody @Valid CreateReservationRequestDto dto) {
@@ -67,7 +65,14 @@ public class ReservationControllerAdapter {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/customers/{customerId}")
+    public ResponseEntity<List<ReservationResponseDto>> findAllByCustomerId(@PathVariable UUID customerId) {
+        List<ReservationResponseDto> list = listAllReservationByCustomerIdInputPort.findAllByCustomerId(customerId)
+                .stream()
+                .map(mapper::toResponseDto)
+                .toList();
 
-
+        return ResponseEntity.ok(list);
+    }
 
 }

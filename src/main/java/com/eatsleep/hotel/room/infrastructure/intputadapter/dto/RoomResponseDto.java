@@ -13,6 +13,7 @@ public record RoomResponseDto(
         BigDecimal costMaintenancePerDay,
         String description,
         Integer capacity,
-        String state
+        String state,
+        String hotelName
 ) {
 }

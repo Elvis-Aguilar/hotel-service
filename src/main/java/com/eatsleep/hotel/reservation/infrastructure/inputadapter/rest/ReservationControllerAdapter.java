@@ -28,6 +28,7 @@ public class ReservationControllerAdapter {
     private final ListAllReservationByRoomIdInputPort listAllReservationByRoomIdInputPort;
     private final ListAllReservationCurrentByRoomIdInputPort listAllReservationCurrentByRoomIdInputPort;
     private final ListAllReservationByCustomerIdInputPort listAllReservationByCustomerIdInputPort;
+    private final ChangeReservationStatusInputPort changeReservationStatusInputPort;
 
     @PostMapping
     public ResponseEntity<Void> createReservation(@RequestBody @Valid CreateReservationRequestDto dto) {
@@ -35,6 +36,14 @@ public class ReservationControllerAdapter {
         creatingReservationInputPort.createReservation(dtoCase);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ReservationResponseDto> payReservation(@PathVariable UUID id) {
+        ReservationResponseDto dto = mapper.
+                toResponseDto(changeReservationStatusInputPort.changeReservationStatus(id, "Pagado"));
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("{id}")

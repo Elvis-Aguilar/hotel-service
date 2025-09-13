@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationRepositoryOutputAdapter implements StoringReservationOutputPort, FindingReservationRangeDateByRoomIdOutputPort,
         FindingReservationByIdOutputPort, FindingAllCurrentReservationByRoomIdOutputPort, FindingAllReservationByRoomIdOutputPort,
-        FindingReservationByCustomerIdOutputPort{
+        FindingReservationByCustomerIdOutputPort, UpdateReservationStatusOutputPort{
 
     private final ReservationDBRepository reservationDBRepository;
     private final RoomDBRepository roomDBRepository;
@@ -73,5 +73,16 @@ public class ReservationRepositoryOutputAdapter implements StoringReservationOut
                 .stream()
                 .map(mapper::toDomainEntity)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public ReservationDomainEntity updateReservationStatus(UUID id, String status) {
+        ReservationDBEntity dbUpdate = reservationDBRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Reservacion no encontrada"));
+
+        dbUpdate.setState(status);
+
+        return mapper.toDomainEntity(reservationDBRepository.save(dbUpdate));
     }
 }

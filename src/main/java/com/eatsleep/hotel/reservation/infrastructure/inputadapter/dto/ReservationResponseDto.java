@@ -19,7 +19,5 @@ public record ReservationResponseDto(
         BigDecimal totalCost,
         BigDecimal discountPercentage,
         UUID roomId
-//        String customerName,
-//        String roomName
 ) {
 }

@@ -1,4 +1,4 @@
-package com.eatsleep.hotel.reservation.infrastructure.outputadapter.persistence;
+package com.eatsleep.hotel.reservation.infrastructure.outputadapter;
 
 import com.eatsleep.hotel.common.infrastructure.annotation.PersistenceAdapter;
 import com.eatsleep.hotel.common.infrastructure.exception.BadRequestException;

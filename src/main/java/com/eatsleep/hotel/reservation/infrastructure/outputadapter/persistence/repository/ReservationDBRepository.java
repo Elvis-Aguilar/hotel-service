@@ -26,6 +26,18 @@ public interface ReservationDBRepository extends JpaRepository<ReservationDBEnti
             @Param("roomId") UUID roomId
     );
 
+    @Query("""
+        SELECT p
+        FROM reservation p
+        WHERE p.startDate <= :endDate
+          AND p.endDate >= :startDate
+          AND p.state = 'Pagado'
+    """)
+    List<ReservationDBEntity> findAllByDateRange(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
+
     List<ReservationDBEntity> findAllByRoomId(UUID roomId);
 
     List<ReservationDBEntity> findAllByCustomerId(UUID customerId);

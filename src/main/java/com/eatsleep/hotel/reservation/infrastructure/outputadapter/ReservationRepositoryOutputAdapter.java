@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationRepositoryOutputAdapter implements StoringReservationOutputPort, FindingReservationRangeDateByRoomIdOutputPort,
         FindingReservationByIdOutputPort, FindingAllCurrentReservationByRoomIdOutputPort, FindingAllReservationByRoomIdOutputPort,
-        FindingReservationByCustomerIdOutputPort, UpdateReservationStatusOutputPort{
+        FindingReservationByCustomerIdOutputPort, UpdateReservationStatusOutputPort, ReportReservationRangeDateOutputport{
 
     private final ReservationDBRepository reservationDBRepository;
     private final RoomDBRepository roomDBRepository;
@@ -84,5 +84,13 @@ public class ReservationRepositoryOutputAdapter implements StoringReservationOut
         dbUpdate.setState(status);
 
         return mapper.toDomainEntity(reservationDBRepository.save(dbUpdate));
+    }
+
+    @Override
+    public List<ReservationDomainEntity> reportRangeDate(LocalDate startDate, LocalDate endDate) {
+        return reservationDBRepository.findAllByDateRange(startDate,endDate)
+                .stream()
+                .map(mapper::toDomainEntity)
+                .toList();
     }
 }

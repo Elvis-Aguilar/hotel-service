@@ -3,8 +3,10 @@ package com.eatsleep.hotel.reservation.infrastructure.inputadapter.rest;
 import com.eatsleep.hotel.common.infrastructure.annotation.WebAdapter;
 import com.eatsleep.hotel.reservation.application.ports.input.*;
 import com.eatsleep.hotel.reservation.application.usecases.CreateReservationDto;
+import com.eatsleep.hotel.reservation.application.usecases.RangeDateCaseDto;
 import com.eatsleep.hotel.reservation.domain.model.ReservationDomainEntity;
 import com.eatsleep.hotel.reservation.infrastructure.inputadapter.dto.CreateReservationRequestDto;
+import com.eatsleep.hotel.reservation.infrastructure.inputadapter.dto.RangeDateRequestDto;
 import com.eatsleep.hotel.reservation.infrastructure.inputadapter.dto.ReservationResponseDto;
 import com.eatsleep.hotel.reservation.infrastructure.inputadapter.mapper.ReservationRestMapper;
 import jakarta.validation.Valid;
@@ -29,6 +31,7 @@ public class ReservationControllerAdapter {
     private final ListAllReservationCurrentByRoomIdInputPort listAllReservationCurrentByRoomIdInputPort;
     private final ListAllReservationByCustomerIdInputPort listAllReservationByCustomerIdInputPort;
     private final ChangeReservationStatusInputPort changeReservationStatusInputPort;
+    private final ReportReservationRangeDateInputPort  reportReservationRangeDateInputPort;
 
     @PostMapping
     public ResponseEntity<Void> createReservation(@RequestBody @Valid CreateReservationRequestDto dto) {
@@ -77,6 +80,18 @@ public class ReservationControllerAdapter {
     @GetMapping("/customers/{customerId}")
     public ResponseEntity<List<ReservationResponseDto>> findAllByCustomerId(@PathVariable UUID customerId) {
         List<ReservationResponseDto> list = listAllReservationByCustomerIdInputPort.findAllByCustomerId(customerId)
+                .stream()
+                .map(mapper::toResponseDto)
+                .toList();
+
+        return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/report")
+    public ResponseEntity<List<ReservationResponseDto>> findAllByReportRangeDate(@RequestBody @Valid RangeDateRequestDto dto) {
+        RangeDateCaseDto dtoCase = dto.toCase();
+
+        List<ReservationResponseDto> list = reportReservationRangeDateInputPort.reportRangeDate(dtoCase)
                 .stream()
                 .map(mapper::toResponseDto)
                 .toList();
